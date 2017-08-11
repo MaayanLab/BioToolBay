@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>BioToolBay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/mystyle.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/slick/slick.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/slick/slick-theme.css') }}" rel="stylesheet"> 
+</head>
+  <header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+           <a href="{{ entry_point }}"> <button type="button" class="btn btn-default navbar-btn">
+              <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> BioToolBay
+            </button></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{{ entry_point }}">Home<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="{{ entry_point }}/search/">Advanced Search</a></li>           
+            <button class="btn btn-primary navbar-btn"><a class="white" href="{{ entry_point }}/t2n/">Explore</a></button>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>  <a href="http://amp.pharm.mssm.edu/datasets2tools">Datasets2Tools</a> </li>
+            <li><a href="{{ entry_point }}/about/">About</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+</header>
+  <div id="wrap">
+  <div id="main" class="container clear-top">
+
+<body>
+
+  <div class="container-fluid"  style="min-height: 100%">
+
+ <div class="row">
+    <div class="col-xs-9 col-md-9">        
+   		 <h1><span class="headline">Advanced Search Options</span></h1>
+   </div>
+ </div> 
+ <br>
+ </br>
+
+
+<div class="row">
+<div class="col-xs-9 col-md-9">  
+  
+  <p style=" word-spacing: 90px"> 
+
+<strong> 
+  Sort-By
+
+  Tool's-Type  
+
+  Published-In
+
+  Your-Keyword
+
+  Search-In </strong>
+  </p>
+
+</div>
+</div>
+
+<div class="row">
+<form name="sort_selection" action="{{ url_for('results_advanced') }}" method='GET'>
+     <select name="sort_selection">
+        <option value="views">Popularity</option>
+        <option value="citations">Number of Citations</option>
+        <option value="date">Date of Publication</option>
+    </select>
+        <select name="type_selection">
+        <option value="all_types">All Types</option>
+        <option value="algorithm">Algorithm</option>
+        <option value="database">Database</option>
+        <option value="package">R Package</option>
+        <option value="simulation">Simulation</option> 
+        <option value="visualization">Visualization Tool</option>
+    </select>
+      <select name="journal_selection">
+        <option value="any_journal">All Journals</option>
+        <option value="1">Nucleid Acids Research</option>
+        <option value="2">Bioinformatics Oxford</option>
+        <option value="4">Database Oxford</option>
+        <option value="3">BMC Bioinformatics</option>
+    </select>
+<input type="text" class="form-inline" placeholder="Type Anything..." name="word_for_search" value="{{ request.form.word_for_search }}">
+        <select name="article_part_selection">
+        <option value="whole_article">All</option>
+        <option value="name_tool">Name</option>
+        <option value="title">Paper's Title</option>
+        <option value="abstract">Paper's Abstract</option>
+        <option value="authors">Authors' List</option>
+        <option value="topics">Tags</option>
+    </select>
+
+
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+</div>
+</div>
+
+<!-- -->
+
+{{ error }}
+
+
+   
+
+
+  </div><!--footer helpers -->
+</div>
+
+
+<footer class="footer">
+      <div class="container-fluid">
+         <div class="row">
+             <br>
+             </br>
+                <div class="col-sm-6 white" class="pull-left" style="font-size: 12px;">
+                    <ul>
+                        <strong> Affiliations </strong>                
+                        <li><a href="http://icahn.mssm.edu/research/labs/maayan-laboratory" target="_blank">The Ma'ayan Lab</a></li>
+                        <li><a href="http://www.lincs-dcic.org/" target="_blank">BD2K-LINCS Data Coordination and Integration Center (DCIC)</a></li>
+                        <li><a href="http://www.lincsproject.org/">NIH LINCS program</a></li>
+                        <li><a href="http://bd2k.nih.gov/" target="_blank">NIH Big Data to Knowledge (BD2K)</a></li>
+                        <li><a href="http://icahn.mssm.edu/" target="_blank">Icahn School of Medicine at Mount Sinai</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 white" class="pull-right" style="font-size: 12px;">
+                    <strong>License</strong>
+                    <br>
+                    </br>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">All contents on this site are covered </span> by the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+                </div>
+            </div>
+        </div>
+
+</footer>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>    
+<script type="text/javascript" src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+
+
+
+
+
+</html>

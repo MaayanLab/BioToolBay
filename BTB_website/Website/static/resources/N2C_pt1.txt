@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Network2Canvas - connecting library terms using shared attributes and visualizing them on a 2-D SVG Canvas." />
+	<meta name="keywords" content="Avi Ma'ayan maayan laboratory mount sinai school of medicine new york mssm network2canvas n2c network 2 canvas" />
+    <meta name="author" content="Christopher Tan" />
+	<title>Network2Canvas</title>
+
+	<link rel="stylesheet" type="text/css" href='../Resources/visualizer5.css' />
+
+
+	<script type='text/javascript' src='../Resources/d3.v2.min.js'></script>
+	<script type="text/javascript" src='../Resources/html5slider.js'></script>
+	<script type='text/javascript' src='../Resources/offlineVisualizer.js'></script>
+</head>
+
+<body>
+	<div id="externalwrapper">
+		<div id="holdElements">
+		
+		
+			<div id="topbar">
+				<span class= "linker" style="font-weight:700">Offline N2C</span>
+
+			</div>
+			
+			
+			<div id="header" style="font-size:20px; font-family:arial; font-weight:700">Network2Canvas: Network Visualization on a Canvas with Enrichment Analysis</div>
+			<div id="menu" class="outputMenu">
+					<span class="tab" id="outputTab1" onclick="displayOutput(1)">Info</span>
+					<span class="tab" id="outputTab2" onclick="displayOutput(2)" style="font-weight:400; background-color: #CCC;">Analysis Output</span>
+			</div>
+
+			<div id="outputDisplay1">
+				<!--<div id="SD1"><span id="SD1">Node Information from GMT</span><title>Click a spot on the canvas to view Node Information</title></div>-->
+
+				<div id="nodeInformation">
+					<div class="displayTitle">Term Name:</div>
+					<div id="nodeName" style="padding-top:5px;padding-bottom:10px;"></div>
+				</div>
+				
+				<span id="additTitle" style="font-size:11px">Additional Information:</span>
+				<div id="infoContainer">
+					<div id="additionalInfo"></div>
+				</div>
+				<div style="position:absolute; top:525px; text-align:center; width:191px">
+				<input type="button" onClick="document.getElementById('genes').value = document.getElementById('additionalInfo').innerHTML.split(', ').join('\n'); document.getElementById('genes').onfocus=''" value="Add to Input List" />
+				</div>
+			</div>
+		<div id="outputDisplay2" class="GSEA" style="display:none; border-bottom: 1px solid black;">
+			<div id="frozenTable" style="padding-bottom:10px;">
+				<table class="contain" style="position:absolute;top:20px;">
+				<th>Term</th>
+				<th>P-Value</th>
+			</table>
+			</div>
+			<div id="enrichmentResults" style="padding-top:10px; position:absolute; top:50px;">
+
+			</div>
+		
+		</div>
+<!--
+			<div id="termPanel" style="position:absolute; top:250px; left:10px; border: 1px solid black;">
+				<form>
+					Find Elements of Term:<br/>
+					<textarea id="elementTerm" onfocus="clearTextArea(this.form.genes)" onBlur="getElements(this.form.elementTerm.value);">Insert Term</textarea>
+				</form>
+			</div>
+-->
+
+			<div id="sidePanel">
+				<div id="menu">
+					<span class="tab" id="tab1" onclick="displayTab(1)">Analysis</span>
+					<span class="tab" id="tab2" onclick="displayTab(2)" style="font-weight:400; background-color: #CCC;">Canvas Options</span>
+				</div>	
+				<form id="form1"><br />
+					<p><b>Gene List Enrichment Analysis</b></p>
+					Choose Color to Highlight Terms:
+					<br /><br />
+						<div id="hexcode_gene">
+						</div>
+						<br />
+					
+					Gene List:<br /><br />
+
+							<div class="center">
+								<textarea id="genes" onfocus="clearTextArea(this.form.genes)" name="genes">Enter list of gene names here</textarea>
+							</div>
+							<div class="center">
+								<input id = "submitButton" type ="button" name="button" value="Submit" selected="true" onClick="geneFill(G_VAR.nodes, this.form.genes.value, G_VAR.indicatorColor, G_VAR.infoDict, G_VAR.infos);"/>
+								<input  type="button" name="button" value="Clear" onclick="indicateClear(G_VAR.nodes);"/><br />
+								<input id ="exampleButton" type="button" name="button" value="Example" onclick="exampleRandom(G_VAR.infos, G_VAR.randomArray, 10);" />
+							</div>
+
+				</form>
+				<form id="form2">
+					<br />
+					<br />
+
+
+					<span class="canvasOptions">Center Canvas:</span>
+				<div class="right">
+					<button type="button" onclick="centerCanvas(G_VAR.nodes, G_VAR.canvasSize)">Center</button></div>
+				<br />
+				<br />
+	
+
+				<span class="canvasOptions">Choose Canvas Color:</span> <div class="right"><br />
+
+				<div id="wheelContain"></div>
+				</div>
+				<br />	
+				<br />
+				<br />
+
+				<span class="canvasOptions">Color Scale: </span><em id="colorScale">1	</em>
+				<div class="right">
+					<input type="range" min="0" max="1" value="1" step=".001" name="scale" id="range_colorScale" onMouseup="scaleColor(G_VAR.nodes, G_VAR.avgWeight, this.form.scale.value, G_VAR.canvasRGB, G_VAR.canvasSize);" onChange="seeScale(this.form.scale.value);"></input><br />
+					<input type="button" name="button" value="Reset Scale" onclick="resetColorScale(G_VAR.nodes, G_VAR.canvasRGB, G_VAR.canvasSize);"/>
+				</div><br />
+				<br />
+
+
+				</form>
+				<br />
+				<br />
+				<div id="findNode" style="border-top: 1px solid black;">
+				
+				<div id="menu">
+					<b style="display:inline-block; padding-right:10px;">Find by:</b>
+					<span class="tab" id="tabFind1" onclick="displayFind(1)">Name</span>
+					<span class="tab" id="tabFind2" onclick="displayFind(2)" style="font-weight:400; background-color: #CCC;">Element</span>
+				</div>	
+					<form id="formFind1">
+					<p><b style="padding-right:5px">Find Terms by Name: </b><br /><br />
+							<textarea id="nodes" names="nodes" cols="10" rows="3" onfocus="clearTextArea(this.form.nodes)">Insert Term List (e.g.,          CDK1            CDK2            CDK3)</textarea>
+							
+							
+							<input type="button" onclick="fill(G_VAR.nodes, this.form.nodes.value, G_VAR.indicatorColor , G_VAR.width);" value="Find"/>
+						</p>
+					</form>
+					<form id="formFind2" style="display:none;">
+					<p><b style="padding-right:5px">Find Terms by Element(s): </b><br /><br />
+							<textarea id="nodes" names="nodes" cols="10" rows="3" onfocus="clearTextArea(this.form.nodes)">Insert Element List (e.g.,          CDK1            CDK2            CDK3)</textarea>
+							
+							<input type="button" onclick="fillElement(G_VAR.nodes, this.form.nodes.value, G_VAR.indicatorColor , G_VAR.width);" value="Find"/>
+							
+						</p>
+					</form>
+				</div>
+				<hr />
+				<br />
+				<a href="#" id="download" onclick="downloadLink();">Download Current View in SVG<br/>(Pathway to Adobe Illustrator)</a>
+
+				<br />
+				
+				</div> 
+
+
+			<div id="holdSVG">
+
+				<div id="svgWrapper">
+					<form id="selectSVG">
+
+						<select id="selectCanvas" onChange="getGMT(this.form.selectCanvas.selectedIndex);getJSON(this.form.selectCanvas.selectedIndex, G_VAR.canvasRGB, G_VAR.indicatorColor);" disabled = "true">
+				
+						</select>
+						</form>
+
+				<div id="svgContainer"></div>
+				<div id="chartContainer"></div>
+				<div id="pvalueContainer"></div>
+				<form id="choiceView" style="padding-top:10px">
+						<input type ="radio" id="mainCanvasSelector" name="a" checked="checked" onClick="selectAlternateView()">Main View</input>
+						<input type ="radio" id="networkView" name = "a" disabled="true" onClick="selectAlternateView()">Network View</input>
+						<input type ="radio" id="pvalueCanvas" name = "a" disabled="true" onClick="selectAlternateView()">P-Value View</input>
+				</form>
+
+				</div>
+
+
+				
+			</div>
+
+
+
+			<div id="manhattanElement">
+				<div id="selectionDisplay3">
+
+				
+				</div>
+			</div>
+
+			</div>
+		</div>
+		<div id="footer">
+			(c) 2012 <a href="http://www.mssm.edu/labs/maayan">Ma'ayan Laboratory</a> - <a href="http://www.mssm.edu">Mount Sinai School of Medicine</a>
+		</div>
+	
+
+
+</body>
+
+
+<script type="text/javascript">
+	colorWheel(10, "div#wheelContain", "G_VAR.canvasRGB", [0, 255, 255]);
+	colorWheel(10, "div#hexcode_gene", "G_VAR.indicatorColor", [255, 255, 255]);
+	

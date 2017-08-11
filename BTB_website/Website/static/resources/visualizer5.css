@@ -1,0 +1,188 @@
+
+
+
+	text {font: 10px sans-serif; pointer-events: none;}
+	
+	body{
+		margin-left:0px;
+		font-family:Arial;
+	}
+	
+	a.linker{
+		text-decoration: none;
+	}
+	
+	a.linker:hover{
+		text-decoration:none;
+	}
+	
+	div#topbar{
+		position:absolute;
+		top: 112px;
+		left:0px;
+		text-align: center;
+		width: 1200px;
+	}
+	
+	span.linker{
+		/*padding-left: 40px;
+		padding-right:40px;*/
+		width:250px;
+		display:inline-block;
+		cursor: pointer;
+		font-size:11px;
+	}
+	
+	span.linker:hover{
+		background-color: #FFF;
+		font-weight:700;
+	
+	}
+	
+	
+	div#externalwrapper{
+		width:1000px;
+		height:825px;
+		margin-left:200px;
+		margin-top:30px;
+		padding:0px;
+
+	}
+
+
+
+
+	a {
+		color:#579;
+	}
+
+	a:visited{
+		color:#648;
+	}
+	
+
+	div#nodeInformation{
+		position:absolute;
+		top:25px;
+		width:191px;
+		height:45px;
+		word-wrap:break-word;
+		margin-bottom:5px;
+	}
+
+	div#infoContainer{
+		border-top: 1px solid #CCC;
+		padding-top:10px;
+		padding-bottom:10px;
+		border-bottom: 1px solid #CCC;
+		position:absolute;
+		top:135px;
+		left:10px;
+		width:171px;
+		height:350px;
+		overflow:auto;
+		
+	}
+
+/*Side Panel*/
+
+	div#menu{
+		background-color:#CCC;
+		height:25px;
+		line-height:25px;
+	}
+
+	div#menu span{
+		padding-left:15px;
+		padding-right:15px;
+		padding-top:1px;
+		padding-bottom:4px;
+		background-color:#FFF;
+		vertical-align:-10%;
+		border: 1px outset #DDD;
+		border-bottom:none;
+		font-weight:700;
+		cursor:default;
+		border-radius:7px 7px 0px 0px;
+		-moz-border-radius:7px 7px 0px 0px; /*Firefox*/
+	}
+
+	div#sidePanel{
+		padding-top:0px;
+		width:200px;
+		height:699px;
+		text-align:center;
+		border-right: 1px solid;
+	}
+
+
+	div#menu span#tab2{
+		font-weight:400;
+		background-color:#CCC;
+	}
+
+	form#form1, form#form2{
+		height:380px;
+	}
+	form#form2{
+		display:none;
+	}
+
+	form#form3{
+		height:150px;
+	}
+
+	textArea#nodes{
+		width:150px;
+		height:85px;
+		vertical-align:middle;
+	}
+	div#sidePanel textarea#genes{
+		width:150px;
+		height:100px;
+	}
+
+	span.canvasOptions{
+		padding-bottom:15px;
+	}
+
+/*holdSVG Elements*/
+
+	div#holdSVG{
+		width:360px;
+		height:560px;
+		vertical-align:middle;
+
+	}
+
+	div#svgWrapper{
+		padding-top:25px;
+		width:320px;
+	}
+
+	div#svgContainer{
+		padding-top:10px;
+		text-align:center;
+	}
+
+	div#chartContainer{
+		display:none;
+	}
+
+	svg#mainSVG{
+		margin-top: 10px;
+		vertical-align:middle;
+		border: 1px solid;
+	}
+	
+
+
+
+	select{
+		text-align:left;
+	}
+
+
+
+
+

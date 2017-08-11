@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>BioToolBay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/mystyle.css') }}" rel="stylesheet"> 
+
+
+
+  <link href="{{ url_for('static', filename='css/slick/slick.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/slick/slick-theme.css') }}" rel="stylesheet"> 
+</head>
+  <header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+           <a href="{{ entry_point }}"><button type="button" class="btn btn-default navbar-btn">
+              <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> BioToolBay
+            </button></a>
+      </div>
+
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{{ entry_point }}">Home<span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="{{ entry_point }}/search/">Advanced Search</a></li>           
+          <button class="btn btn-primary navbar-btn"><a class="white" href="{{ entry_point }}/t2n/">Explore</a></button>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        <li>  <a href="http://amp.pharm.mssm.edu/datasets2tools">Datasets2Tools</a> </li>
+        <li><a href="{{ entry_point }}/about/">About</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+  </header>
+  <div id="wrap">
+  <div id="main" class="container clear-top">
+
+<body>
+
+
+  <div class="container-fluid"  style="min-height: 100%">
+
+ 
+
+
+   <div class="row">
+              <div class="col-xs-9 col-md-9">
+              <h1>{{ tool_main_name }}</h1></div>
+              </div> 
+              <br>
+              </br>
+<div class="tab-content col-xs-9 col-md-9">
+           <div role="tabpanel" class="tab-pane fade in active" id="general">
+
+                <div class="row">
+                 <div class="col-xs-3 col-md-3 col-spaced-logo" id="tool-logo"> <span class="glyphicon glyphicon-wrench white" align="center" style="font-size: 35px;"></span> <p class="white" style="font-size: 18px;" align="center"><strong> {{ tool_main_name }} </strong></p>    </div>
+                    <div class="col-xs-9 col-md-9 spaced-columns">
+                    {{ tool_main_abstract }}
+                   </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-3 col-md-3 col-spaced-logo" id="authors-logo"> <p class="white" ><strong> Authors </strong></p>    </div>
+                    <div class="col-xs-9 col-md-9 spaced-columns">
+                    <br>
+                    <p>{{ tool_main_authors }}</p></div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-xs-3 col-md-3 col-spaced-logo" id="homepage-logo"> <p class="white"><strong> Homepage </strong></p>    </div>
+                    <div class="col-xs-9 col-md-9 spaced-columns">
+                    <br>
+                    <a href={{ tool_main_homepage }}><p>{{ tool_main_homepage }}</p> </a></div>
+                </div>
+
+                  <div class="row">
+                    <div class="col-xs-3 col-md-3 col-spaced-logo" id="publication-logo" data-toggle="modal" data-target="#myModal"> <p class="white"><strong> Publication </strong></p>    </div>
+                          <div class="col-xs-9 col-md-9 spaced-columns">
+                              <p> {{ tool_main_authors }}; {{ tool_main_title }},
+                           <i> {{ tool_main_journal }}</i>,{{ tool_main_date }},{{ tool_main_doi }}</p>
+                              <p><strong>Link to the publication:</strong> <a href={{ tool_main_link }}>click</a></p>
+                          </div>
+                </div>
+
+
+
+          
+
+        </div><!-- END OF TAB GENERAL -->
+
+        <div role="tabpanel" class="tab-pane fade" id="specifications">
+          <div class="row">
+             
+                <div class="col-xs-3 col-md-3">
+                    
+                </div>
+           </div>
+        </div><!--END OF TAB SPECIFICATION -->
+                      
+       <div role="tabpanel" class="tab-pane fade" id="reviews">
+            <div class="row">
+              
+              <div class="col-xs-3 col-md-3">
+                     
+               </div>
+           </div>
+      </div>
+
+</div><!-- closes panel with tabs-->
+
+                    
+
+<div class="col-xs-3 col-md-3">
+   
+
+<div class="row">
+    <div class="list-group">
+      <a href="#" class="list-group-item list-group-item-info"  class="white"  style="font-size: 18px; background:  #346A96    ">
+      <center><font color="white"><strong> METRICS </strong></font> </center>  
+      </a>
+      <div class="list-group-item "><center> <img src="{{ tool_main_altmetric }}" width="60" height="60" alt="altmetric" align="center"  data-toggle="tooltip" data-placement="left" title="Altmetric Score" style="margin-bottom: 8px; margin-top: 8px; "></center>
+      </div>
+
+      <div class="list-group-item">
+        <center>
+        <p><strong> FAIRNESS SCORE </strong></p>
+        <form action="https://amp.pharm.mssm.edu/fairshake/redirectedFromExt" id="insigform" method="POST" target="_blank">
+                    <input type="hidden" name="theName" value="{{ tool_main_name }}">
+                    <input type="hidden" name="theURL" value="{{ tool_main_homepage }}">
+                    <input type="hidden" name="theDescrip" value="{{ tool_main_title }}">
+                    <input type="hidden" name="theType" value="Tool">
+                    <input type="hidden" name="theSrc" value="BioToolBay">
+                    <label id="submitlabel"><input type="submit" id="submithere" style="display:none;"/></label></form></center>
+        </div>
+
+      <div  class="list-group-item"> Citations: <span class="badge">{{ tool_main_citations }}</span>
+       </div>
+      <div class="list-group-item"> Views:  <span class="badge">{{ tool_main_views }}</span></div>
+    </div>
+    </div>
+
+</div>
+    <br>
+    </br>
+       
+
+    
+
+    <div class="row">
+            <p> <h3> KEYWORDS</h3></p>
+            {% for word in keywords %}
+               <span class="label label-primary">{{ word }}</span> 
+            {% endfor %}
+    </div>
+        <br>
+        </br>
+
+   
+</div>
+
+
+
+
+
+                  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+                  <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>        
+                  <script type="text/javascript" src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+
+                  <script type="text/javascript">
+                  $(document).ready(function(){
+                   $('.multiple-items').slick({
+                    centerMode: true,
+                    centerPadding: '60px',
+                    slidesToShow: 3,
+                    responsive: [
+                      {
+                        breakpoint: 768,
+                        settings: {
+                          arrows: true,
+                          centerMode: true,
+                          centerPadding: '40px',
+                          slidesToShow: 3
+                        }
+                      },
+                      {
+                        breakpoint: 480,
+                        settings: {
+                          arrows: true,
+                          centerMode: true,
+                          centerPadding: '40px',
+                          slidesToShow: 1
+                        }
+                      }
+                    ]
+                  });
+                  });
+                  </script>
+
+
+
+
+
+<div class="col-xs-12 col-md-12">
+
+                        <div class="row">
+                            <div class="adjusted slider multiple-items ">
+                              
+                              <!--Similar Tool 1-->
+                              <div class="col-sm-6 col-md-9" style="margin-top: 45px; padding-top: 10px;background: white;width: 300px; height: 290px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_2_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_2_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_2_citations }}
+                                        </button>
+                                            <div class="caption">
+                                              <h3>{{ similar_tool_2_name }}</h3>
+                                              <p>{{ similar_tool_2_title}}</p>
+                                            </div>
+                                              <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                              <p><a href="{{ entry_point }}/tool/{{ similar_tool_2_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                              </div>                                         
+                                </div><!--thumbnail-->
+                              </div><!--col-sm-6-->
+
+                              <!--Similar Tool 2-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;background: white;  width: 300px; height: 290px  " >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_3_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_3_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_3_citations }}
+                                        </button>
+                                        
+                                           <div class="caption">
+                                              <h3>{{ similar_tool_3_name }}</h3>
+                                              <p>{{ similar_tool_3_title }}</p>
+                                          </div>
+                                          <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                              <p><a href="{{ entry_point }}/tool/{{ similar_tool_3_name }}" class="btn btn-primary pull-right" align="right" role="button">View</a> </p>
+                                          </div>
+                                </div>
+                              </div>
+
+                               <!--Similar Tool 3-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;background: white;  width: 300px; height: 290px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_4_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_4_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_4_citations }}
+                                        </button>
+                                        <div class="caption">
+                                            <h3>{{ similar_tool_4_name }}</h3>
+                                            <p>{{ similar_tool_4_title }}</p>
+                                        </div>
+                                        <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                            <p><a href="{{ entry_point }}/tool/{{ similar_tool_4_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+
+                               <!--Similar Tool 4-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;background: white; width: 300px; height: 262px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_5_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_5_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_5_citations }}
+                                        </button>
+                                         <div class="caption">
+                                            <h3>{{ similar_tool_5_name }}</h3>
+                                            <p>{{ similar_tool_5_title}}</p>
+                                        </div>
+                                        <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                            <p><a href="{{ entry_point }}/tool/{{ similar_tool_5_name}}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+
+
+                               <!--Similar Tool 5-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;background: white; width: 300px; height: 262px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                      <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_6_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_6_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_6_citations }}
+                                        </button>
+                                        <div class="caption">
+                                            <h3>{{ similar_tool_6_name }}</h3>
+                                            <p>{{ similar_tool_6_title }}</p>
+                                        </div>
+                                            <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                            <p><a href="{{ entry_point }}/tool/{{ similar_tool_6_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+
+                              <!--Similar Tool 6-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px; background: white; width: 300px; height: 262px " >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_7_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_7_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_7_citations }}
+                                        </button>
+                                           
+                                      <div class="caption">
+                                        <h3>{{ similar_tool_7_name }}</h3>
+                                        <p>{{ similar_tool_7_title }}</p>
+                                      </div>
+                                      <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                        <p><a href="{{ entry_point }}/tool/{{ similar_tool_7_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                      </div>
+                                </div>
+                              </div>
+
+                               <!--Similar Tool 7-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px; background:white; width: 300px; height: 262px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;" >
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_8_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_8_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_8_citations }}
+                                        </button>
+                                        <div class="caption">
+                                          <h3>{{ similar_tool_8_name  }}</h3>
+                                             <p>{{ similar_tool_8_title }}</p>
+                                        </div>
+                                        <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                            <p><a href="{{ entry_point }}/tool/{{ similar_tool_8_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+
+                               <!--Similar Tool 8-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;  background:white;  width: 100px; height: 262px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;" >
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                        <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_9_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_9_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                        <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_9_citations }}
+                                        </button>
+                                         <div class="caption">
+                                          <h3>{{ similar_tool_9_name }}</h3>
+                                          <p>{{ similar_tool_9_title }}</p>
+                                          </div>
+                                          <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                          <p><a href="{{ entry_point }}/tool/{{ similar_tool_9_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+                            <!--Similar Tool 9-->
+                              <div class="col-sm-6 col-md-4" style="margin-top: 45px; padding-top: 10px;  background:white;  width: 100px; height: 262px" >
+                                <div class="thumbnail" style="height: 260px;; border-radius: 10px; border-width: 8px; border-color: #15295B; position: relative;">
+                                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Similarity Score">
+                                          <span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{ similar_tool_1_similarity }}%
+                                        </button>
+                                        <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="left" title="Views">
+                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ similar_tool_1_views }}
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Citations">
+                                          <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> {{ similar_tool_1_citations }}
+                                        </button>
+                                    
+                                         <div class="caption">
+                                              <h3>{{ similar_tool_1_name }}</h3>
+                                              <p>{{ similar_tool_1_title }}</p>
+                                        </div>
+                                        <div class="right-panel-link" style="position: absolute;bottom: 8px;right: 8px">
+                                              <p><a href="{{ entry_point }}/tool/{{ similar_tool_1_name }}" class="btn btn-primary pull-right" align="center" role="button">View</a> </p>
+                                        </div>
+                                </div>
+                              </div>
+
+
+                        
+
+
+                             
+
+                             
+
+                              </div><!-- Adjusted slider-->
+
+
+                            </div><!-- ROW-->
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+  </div>
+
+
+
+   
+
+
+  </div><!--footer helpers -->
+</div>
+<footer class="footer">
+      <div class="container-fluid">
+            <div class="row">
+             <br>
+                    </br>
+                <div class="col-sm-6 white" class="pull-left" style="font-size: 12px;">
+
+                    <ul>
+                    <strong> Affiliations </strong>
+                 
+                        <li><a href="http://icahn.mssm.edu/research/labs/maayan-laboratory" target="_blank">The Ma'ayan
+                            Lab</a></li>
+                        <li><a href="http://www.lincs-dcic.org/" target="_blank">BD2K-LINCS Data Coordination and
+                            Integration Center (DCIC)</a></li>
+                        <li><a href="http://www.lincsproject.org/">NIH LINCS program</a></li>
+                        <li><a href="http://bd2k.nih.gov/" target="_blank">NIH Big Data to Knowledge (BD2K)</a></li>
+                        <!-- <li><a href="https://commonfund.nih.gov/idg/index" target="_blank">NIH Illuminating the Druggable Genome (IDG) Program</a></li> -->
+                        <li><a href="http://icahn.mssm.edu/" target="_blank">Icahn School of Medicine at Mount Sinai</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 white" class="pull-right" style="font-size: 12px;">
+                    <strong>License</strong>
+                        <br>
+                    </br>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">All contents on this site are covered </span> by the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+                </div>
+            </div>
+        </div>
+
+</footer>
+
+        
+
+
+ <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v4.js"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/fair.js') }}"></script>
+
+               
+ <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+
+</html>

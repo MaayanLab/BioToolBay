@@ -1,0 +1,30 @@
+
+
+
+
+	getJSON(json, [0, 255, 255], [255, 255, 255]);
+
+	if (typeof infos != "undefined") {
+		G_VAR.infos = infos;
+	}
+
+
+	storeFact = [0,0];
+
+
+
+	d3.select("#holdSVG").append("div")
+			.attr("id","infoReminder")
+			.style("width", "390px").style("padding-top", "15px")
+			.text("Click a spot on the canvas to view more information about the term.");
+
+	if (isEmpty(G_VAR.infos))
+	{
+		d3.select("#main").on("mousedown", null);
+		d3.select("#main").on("mousedown", declareName);
+		d3.select("#tabFind2").attr("onclick", null).text("");
+	}
+
+</script>
+
+</html>
