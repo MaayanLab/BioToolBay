@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>BioToolBay</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/mystyle.css') }}" rel="stylesheet"> 
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script> 
+  <link href="{{ url_for('static', filename='css/slick/slick.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/slick/slick-theme.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/isotope.css') }}" rel="stylesheet">
+ </head>
+  <header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+           <a href="{{ entry_point }}" <button type="button" class="btn btn-default navbar-btn">
+              <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> BioToolBay
+            </button></a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"> <a href="{{ entry_point }}">Home<span class="sr-only">(current)</span></a></li>
+            <li class="active"> <a href="{{ entry_point }}/search/">Advanced Search</a></li>           
+          <button class="btn btn-primary navbar-btn"><a class="white" href="{{ entry_point }}/t2n/">Explore</a></button>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>  <a href="http://amp.pharm.mssm.edu/datasets2tools">Datasets2Tools</a> </li>
+            <li>  <a href="{{ entry_point }}/about/">About</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</header>
+
+<!-- needed for nice header and footer -->
+<div id="wrap">
+<div id="main" class="container clear-top">
+
+<body>
+
+<div class="container-fluid"  style="min-height: 100%">
+
+
+<div class="row">
+    <div class="col-xs-9 col-md-9">        
+      <h1><span class="headline"> Filtered Results: {{ length }} </span> </h1>
+    </div>
+    <div class="col-xs-3 col-md-3"> 
+      <a href="{{ entry_point }}/search/"><button type="button" class="btn btn-danger white" style="margin-top: 32px">New Search </button></a> 
+    </div> 
+</div> 
+<br>
+
+
+<div class="row">
+  <p> <strong>Your Keywords:</strong></p>
+  <div class="col-xs-9 col-md-9"> 
+    <span class="label label-primary">{{ chosen_tool }}</span> 
+  </div>
+</div>
+  </br>
+
+<!-- This piece of code as a reminder from first implementation of the filtering options.
+This is here only to pass the query to next page with added keyword. It can be reused to add advance filtering options-->
+<div class="row">
+<form name="sort_selection" action="{{ url_for('filtered_results_main') }}" method='GET'>
+    <input type="text" class="form-inline" placeholder="Type Anything..." name="word_for_search" value="{{ request.form.word_for_search }}">
+    <select name="article_part_selection" style="display:none;">
+        <option value="whole_article">All</option>
+    </select>
+    <input type="text" class="form-inline" name="main_word" value="{{ chosen_tool }}"  style="display:none;">
+    <button class="btn btn-primary" type="submit">Add Keyword</button>
+</form>
+<br>
+<br>
+
+<!--  BUTTONS FOR FILTERING AND SORTING OPTIONS-->
+<div class="row">
+<div class="col-xs-6 col-md-9">
+  
+  <p><strong>Filtering Options</strong></p>
+
+<div id="filters" class="button-group">
+  <button class="button is-checked" data-filter="*">Show All</button>
+  <button class="button" data-filter=".package">Package</button>
+  <button class="button" data-filter=".algorithm">Algorithm</button>
+  <button class="button" data-filter=".simulation">Simulation</button>
+  <button class="button" data-filter=".database">Database</button>
+  <button class="button" data-filter=".visualization">Visualization Tool</button>
+</div>
+</div>
+
+ <p><strong>Sort By</strong></p>
+
+<div class="button-group sort-by-button-group" class="pull-right">
+  <button class="button" data-sort-value="views">Popularity</button>
+  <button class="button" data-sort-value="citations">Citations</button>
+  <button class="button" data-sort-value="date">Publication Year</button>
+  
+</div>
+</div>
+
+<br>
+<br>       
+
+
+
+<div class="row" id="results"> 
+
+        {% for index, row in tool_info.iterrows() %}
+  <div class="col-xs-6 col-md-4 {{ row.additional_info }}" id="result-card" data-category="{{ row.additional_info }}">
+    <div class="row">             
+      <div class="thumbnail" style="height: 150px;  border-width: 2px; margin-left:15px;  position: relative; box-shadow: 10px 10px 5px #888888;">                
+                              
+            <a href="{{ entry_point }}/tool/{{ row.name_tool }}">
+            <!-- CHOSE A PICTURE FOR A SPECIIC TYPE OF THE TOOL-->
+               <div class="col-xs-3 col-md-3 col-spaced-result" style=" width: 110px; height: 110px; margin-left: 0px; margin-top: 12px"> 
+                   {% if row.additional_info == "database" %}
+                   <img src="{{ url_for('static', filename='images/database_1.png') }}" class="img-rounded" width="110" height="110">
+                   {% elif row.additional_info == "algorithm" %}
+                   <img src="{{ url_for('static', filename='images/algorithm_1.png') }}" class="img-rounded" width="110" height="110">
+                   {% elif row.additional_info == "R package" %}
+                   <img src="{{ url_for('static', filename='images/package_1.png') }}" class="img-rounded" width="110" height="110">
+                   {% elif row.additional_info == "package" %}
+                   <img src="{{ url_for('static', filename='images/package_1.png') }}" class="img-rounded" width="110" height="110">
+                   {% elif row.additional_info == "visualization" %}
+                   <img src="{{ url_for('static', filename='images/visualization_1.png') }}" class="img-rounded" width="110" height="110">
+                   {% elif row.additional_info == "simulation" %}
+                   <img src="{{ url_for('static', filename='images/simulation_1.png') }}" class="img-rounded" width="110" height="110">
+                  {% else %}
+                   <img src="{{ url_for('static', filename='images/tool_3.png') }}" class="img-rounded" width="110" height="110">
+                   {% endif %}
+                </div>
+            </a>
+           <div class="col-xs-3 col-md-8"> 
+               <h4 class="name">{{ row.name_tool }}</h4>
+                <p  style="font-size: 10px;">{{ row.title }}</p>
+                <!--DATA NEEDED FOR ISOTOPE LIBRARY FOR FILTERING AND SORTING -->
+                <div class="views" style="display:none;">{{ row.views}} </div>
+                <div class="citations" style="display:none;">{{ row.citations}} </div>
+                <div class="date" style="display:none;">{{ row.date}} </div>
+                <div class="category" style="display:none;">{{ row.additional_info}} </div>
+          </div>
+          <div class="right-panel-link" style="position: absolute; bottom: 3px;">
+           <p>
+                  <span class="badge"  data-toggle="tooltip" data-placement="left" title="views" id="views" >
+                      <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="font-size: 12px"></span> <span class="views">{{ row.views}} </span>
+                  </span>
+                  <span class="badge"  data-toggle="tooltip" data-placement="left" title="citations"> 
+                      <span class="glyphicon glyphicon-paperclip" aria-hidden="true" style="font-size: 12px"></span> {{ row.citations}}</span>
+            </p>
+          </div>            
+                                      
+        </div> 
+                                       
+    </div>
+ </div>
+        {% endfor %}
+
+</div>
+ 
+</div>
+</div>
+  </div><!--footer helpers -->
+</div>
+<footer class="footer" >
+      <div class="container-fluid">
+         <div class="row">
+             <br>
+             </br>
+                <div class="col-sm-6 white" class="pull-left" style="font-size: 12px;">
+                    <ul>
+                        <strong> Affiliations </strong>
+                        <li><a href="http://icahn.mssm.edu/research/labs/maayan-laboratory" target="_blank">The Ma'ayan Lab</a></li>
+                        <li><a href="http://www.lincs-dcic.org/" target="_blank">BD2K-LINCS Data Coordination and Integration Center (DCIC)</a></li>
+                        <li><a href="http://www.lincsproject.org/">NIH LINCS program</a></li>
+                        <li><a href="http://bd2k.nih.gov/" target="_blank">NIH Big Data to Knowledge (BD2K)</a></li>
+                        <li><a href="http://icahn.mssm.edu/" target="_blank">Icahn School of Medicine at Mount Sinai</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 white" class="pull-right" style="font-size: 12px;">
+                    <strong>License</strong>
+                        <br>
+                    </br>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">All contents on this site are covered </span> by the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+                </div>
+            </div>
+        </div>
+
+</footer>
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>  
+<script type="text/javascript" src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/isotope-docs.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.v2.min.js') }}"></script>
+
+ 
+
+<!-- ISOPTOPE JS, LIBRARY -->
+ <script type="text/javascript">
+
+var $grid = $('#results').isotope({
+  itemSelector: 'div#result-card.col-xs-6.col-md-4',
+  layoutMode: 'fitRows',
+  getSortData: {
+    name: 'h4.name',
+    citations: '.citations parseInt',
+    views: '.views parseInt',
+    date: '.date parseInt',
+    category: '.category'
+  }
+});
+
+
+// filter functions
+var filterFns = {
+  // show if number is greater than 50
+  numberGreaterThan50: function() {
+    var number = $(this).find('.number').text();
+    return parseInt( number, 10 ) > 50;
+  },
+  // show if name ends with -ium
+  ium: function() {
+    var name = $(this).find('.name').text();
+    return name.match( /ium$/ );
+  }
+};
+
+$('#filters').on( 'click', 'button', function() {
+  var filterValue = $( this ).attr('data-filter');
+  // use filterFn if matches value
+  filterValue = filterFns[ filterValue ] || filterValue;
+  $grid.isotope({ filter: filterValue });
+});
+// bind sort button click
+$('.sort-by-button-group').on( 'click', 'button', function() {
+  var sortValue = $(this).attr('data-sort-value');
+  $grid.isotope({ sortBy: sortValue ,sortAscending : false });
+});
+
+// change is-checked class on buttons
+$('.button-group').each( function( i, buttonGroup ) {
+  var $buttonGroup = $( buttonGroup );
+  $buttonGroup.on( 'click', 'button', function() {
+    $buttonGroup.find('.is-checked').removeClass('is-checked');
+    $( this ).addClass('is-checked');
+  });
+});
+
+</script>
+ <script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+ <script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+</html>

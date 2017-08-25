@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>BioToolBay</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/mystyle.css') }}" rel="stylesheet"> 
+
+ <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Semibold+Italic">
+
+  <link href="{{ url_for('static', filename='css/slick/slick.css') }}" rel="stylesheet"> 
+  <link href="{{ url_for('static', filename='css/slick/slick-theme.css') }}" rel="stylesheet"> 
+</head>
+	<header>
+	<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+           <a href="{{ entry_point }}"> <button type="button" class="btn btn-default navbar-btn">
+              <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> BioToolBay
+            </button></a>
+      </div>
+
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="{{ entry_point }}">Home<span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="{{ entry_point }}/search/">Advanced Search</a></li>           
+          <button class="btn btn-primary navbar-btn"><a class="white" href="{{ entry_point }}/t2n/">Explore</a></button>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+        <li>  <a href="http://amp.pharm.mssm.edu/datasets2tools">Datasets2Tools</a> </li>
+        <li><a href="{{ entry_point }}/about/">About</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+
+	</header>
+  <div id="wrap">
+  <div id="main" class="container clear-top">
+
+<body>
+
+<div class="container wrapper-container" align="center" style="min-height: 130%">
+     
+
+
+        <img  src="{{ url_for('static', filename='images/bio2.png') }}" class="img-rounded" width="650" height="450" style="margin-top: 1cm">
+        <form action="" class="form" method="post">
+            <input type="text" id="ajax" list="json-datalist" class="form-inline" placeholder="Type Anything..." name="word_for_search" value="{{ request.form.word_for_search }}">
+             <datalist id="json-datalist"></datalist>
+            <input type="submit" class="btn btn-primary" value="Search">
+        </form>
+  
+        <p>{{ error }}</p>
+
+        <div id="page-wrapper">
+  
+
+  
+</div>
+   
+  <div class="row"  align="center">
+       <div class="myoptions">
+        
+         <p>Search Bioinformatics Tools by Name, Description or Keyword! </p>
+        <p>BTB Database is Populated with Resources from:  <a href="https://academic.oup.com/nar">Nucleid Acid Research</a>,
+        <a href="https://academic.oup.com/database"> Database Oxford</a>,
+         <a href="https://academic.oup.com/bioinformatics"> Bioinformatic Oxford</a>, 
+          <a href="https://bmcbioinformatics.biomedcentral.com/">BMC Bioinformatics </a>. </p>
+      </div>
+    </div>
+
+  <div class="row"  align="center">
+   <div class="myoptions" style="padding-left: 3.5cm;" >
+          <a class="white" href="{{ entry_point }}/results_advanced/?sort_selection=views&type_selection=all_types&journal_selection=any_journal&word_for_search=&article_part_selection=whole_article"> <div class="col-xs-12 col-md-6 col-spaced" id="rcorners-left"> <span class="glyphicon glyphicon-wrench white" aria-hidden="true"  style="font-size: 16px;"></span><p class="white" style="font-size: 16px;"> 5995 <br/>Unique Resources </p>
+            </div></a>
+
+          <a class="white" href="{{ entry_point }}/results_advanced/?sort_selection=views&type_selection=database&journal_selection=any_journal&word_for_search=&article_part_selection=whole_article">
+          <div class="col-xs-12 col-md-6 col-spaced" id="rcorners-middle1"> 
+              <span class="glyphicon glyphicon-folder-open white" aria-hidden="true" style="font-size: 16px;"></span><p class="white" style="font-size: 16px;"> Over <br/>760 <br/> Databases</p>
+          </div></a>
+               <a class="white" href="{{ entry_point }}/results_advanced/?sort_selection=views&type_selection=visualization&journal_selection=any_journal&word_for_search=&article_part_selection=whole_article">
+            <div class="col-xs-12 col-md-6 col-spaced" id="rcorners-middle1"> 
+                    <span class="glyphicon glyphicon-eye-open white" aria-hidden="true" style="font-size: 16px;"></span><p class="white" style="font-size: 16px;"> 
+                    164 Visualization Tools</p>
+            </div></a>
+
+             <a class="white" href="{{ entry_point }}/about">
+          <div class="col-xs-12 col-md-6 col-spaced" id="rcorners-right"> <span class="glyphicon glyphicon-book white" aria-hidden="true" style="font-size: 16px;"></span><p class="white" style="font-size: 16px;">  4 Major Bioinformatics Journals! </p> 
+          </div></a>
+    </div>
+    </div>
+      
+  </div>
+
+
+
+  </div><!--footer helpers -->
+</div>
+<footer class="footer" >
+      <div class="container-fluid">
+            <div class="row">
+             <br>
+                    </br>
+                <div class="col-sm-6 white" class="pull-left" style="font-size: 12px;">
+
+                    <ul>
+                    <strong> Affiliations </strong>
+                 
+                        <li><a href="http://icahn.mssm.edu/research/labs/maayan-laboratory" target="_blank">The Ma'ayan
+                            Lab</a></li>
+                        <li><a href="http://www.lincs-dcic.org/" target="_blank">BD2K-LINCS Data Coordination and
+                            Integration Center (DCIC)</a></li>
+                        <li><a href="http://www.lincsproject.org/">NIH LINCS program</a></li>
+                        <li><a href="http://bd2k.nih.gov/" target="_blank">NIH Big Data to Knowledge (BD2K)</a></li>
+                        <!-- <li><a href="https://commonfund.nih.gov/idg/index" target="_blank">NIH Illuminating the Druggable Genome (IDG) Program</a></li> -->
+                        <li><a href="http://icahn.mssm.edu/" target="_blank">Icahn School of Medicine at Mount Sinai</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 white" class="pull-right" style="font-size: 12px;">
+                    <strong>License</strong>
+                        <br>
+                    </br>
+                    <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">All contents on this site are covered </span> by the <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+                </div>
+            </div>
+        </div>
+
+</footer>
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+
+     
+<script type="text/javascript" src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.v2.min.js') }}"></script>
+
+<script>
+// Get the <datalist> and <input> elements.
+var dataList = document.getElementById('json-datalist');
+var input = document.getElementById('ajax');
+
+// Create a new XMLHttpRequest.
+var request = new XMLHttpRequest();
+
+// Handle state changes for the request.
+request.onreadystatechange = function(response) {
+  if (request.readyState === 4) {
+    if (request.status === 200) {
+      // Parse the JSON
+      var jsonOptions = JSON.parse(request.responseText);
+  
+      // Loop over the JSON array.
+      jsonOptions.forEach(function(item) {
+        // Create a new <option> element.
+        var option = document.createElement('option');
+        // Set the value using the item in the JSON array.
+        option.value = item;
+        // Add the <option> element to the <datalist>.
+        dataList.appendChild(option);
+      });
+      
+      // Update the placeholder text.
+      input.placeholder = "e.g. gene expression";
+    } else {
+      // An error occured :(
+      input.placeholder = "Couldn't load datalist options :(";
+    }
+  }
+};
+
+// Update the placeholder text.
+input.placeholder = "Loading options...";
+
+// Set up and make the request.
+request.open('GET', 'http://amp.pharm.mssm.edu/biotoolbay/autocomplete', true);
+request.send();
+</script>
+
+</html>
+
